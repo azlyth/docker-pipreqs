@@ -1,12 +1,7 @@
-FROM python:3.6-alpine
+FROM python:3.6.2-alpine3.6
 
 # Install Python requirements
-# NOTE: Do this before adding the filesystem overlay so that misc file updates
-# don't require reinstalling Python libraries
-ADD filesystem/root/requirements.txt /root/
-RUN pip install -r /root/requirements.txt
+RUN pip install pipreqs
 
-# Overlay project files onto the filesystem
-ADD filesystem /
-
-CMD /root/main.py
+VOLUME /project
+CMD pipreqs --print /project
